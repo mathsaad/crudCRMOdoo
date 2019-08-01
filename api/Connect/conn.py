@@ -1,7 +1,7 @@
 import xmlrpc.client
 
 url = 'http://localhost:8069'
-db = 'odoo'
+db = 'dev'
 username = 'saadrcaa@gmail.com'
 password = 'sk76wBPSFFs8VSZ'
 
