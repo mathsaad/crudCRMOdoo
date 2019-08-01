@@ -7,6 +7,7 @@ class Odoo():
     idLead: object
     output: object
     uid: object
+    idlead = dict
     object: ServerProxy
     common: ServerProxy
     url = 'http://localhost:8069'
@@ -15,12 +16,13 @@ class Odoo():
     password = 'sk76wBPSFFs8VSZ'
     commonUrl = "{}/xmlrpc/2/common".format(url)
 
-    def _init_(self, url, db, username, password, commonUrl):
+    def _init_(self, url, db, username, password, commonUrl, idlead):
         self.url = url
         self.db = db
         self.username = username
         self.password = password
         self.commonUrl = commonUrl
+        self.idLead = idlead
 
     def authenticateOdoo(self):
         common = xmlrpc.client.ServerProxy(self.commonUrl)
@@ -69,14 +71,14 @@ class Odoo():
                                                'priority': '3', 'write_date': '10-02-2019'}])
         return self.idLead
 
-    def updateLead(self):
+    def updateLead(self, idlead):
         return self.object.execute_kw(self.db, self.uid, self.password, 'crm.lead', 'write',
-                                      [[self.idLead], {'name': 'Newer Lead By API'}])
+                                      [[idlead], {'name': 'Newer Lead By API'}])
 
-    def searchById(self, idlead=None):
+    def searchById(self, idlead):
         return self.object.execute_kw(self.db, self.uid, self.password, 'crm.lead', 'name_get', [[idlead]])
 
-    def deleteById(self, idlead=None):
+    def deleteById(self, idlead):
         self.object.execute_kw(self.db, self.uid, self.password, 'crm.lead', 'unlink', [[idlead]])
         delUser = self.object.execute_kw(self.db, self.uid, self.password, 'crm.lead', 'search',
                                          [[['id', '=', idlead]]])
@@ -96,3 +98,6 @@ print(od.listingRecordWithAttribs())
 print(od.listingRecordWithAllAttribs())
 print(od.searchAndRead())
 print(od.createLead())
+print(od.updateLead(idlead=od.idLead))
+print(od.searchById(idlead=od.idLead))
+print(od.deleteById(idlead=od.idLead))
