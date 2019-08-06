@@ -37,13 +37,11 @@ class CrmLead():
         return self.object.execute_kw(self.od.db, self.od.uid, self.od.password, 'crm.lead', 'search_read', [[]],
                                       {'fields': ['name', 'partner_id', 'partner_name', 'email_from', 'website',
                                                   'team_id',
-                                                  'kanban_state', 'create_date', 'write_date', 'priority'], 'limit': 5})
+                                                  'kanban_state', 'create_date', 'write_date', 'priority'], 'limit': 20})
 
-    def createLead(self):
+    def createLead(self, lead):
         self.idLead = self.object.execute_kw(self.od.db, self.od.uid, self.od.password, 'crm.lead', 'create',
-                                             [{'name': 'New Lead By API', 'email_from': 'saadrcaa@gmail.com',
-                                               'website': False, 'kanban_state': 'green',
-                                               'priority': '3', 'write_date': '10-02-2019'}])
+                                             [lead])
         return self.idLead
 
     def updateLead(self, idlead):
